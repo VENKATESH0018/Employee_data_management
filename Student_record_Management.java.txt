@@ -1,0 +1,260 @@
+import java.util.Scanner;
+
+class StudentNode {
+    int id;
+    String name;
+    double gpa;
+    long phone;
+    StudentNode next;
+
+    // Constructor
+    public StudentNode(int id, String name, double gpa, long phone) {
+        this.id = id;
+        this.name = name;
+        this.gpa = gpa;
+        this.phone = phone;
+        this.next = null;
+    }
+}
+
+public class Main {
+    private StudentNode head;
+
+    // Inserting data into the linked list
+    public void insert(int id, String name, double gpa, long phone) {
+        StudentNode newNode = new StudentNode(id, name, gpa, phone);
+        if (head == null) {
+            head = newNode;
+        } else {
+            StudentNode temp = head;
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = newNode;
+        }
+    }
+
+    // Displaying data of students
+    public void display() {
+        StudentNode temp = head;
+        while (temp != null) {
+            System.out.println(temp.id + " " + temp.name + " " + temp.gpa + " " + temp.phone);
+            System.out.println();
+            temp = temp.next;
+        }
+    }
+
+    // Checking data by name
+    public void checkByName(String name) {
+        StudentNode temp = head;
+        while (temp != null) {
+            if (temp.name.equals(name)) {
+                System.out.println(temp.id + " " + temp.name + " " + temp.gpa + " " + temp.phone);
+                System.out.println();
+                return;
+            }
+            temp = temp.next;
+        }
+        System.out.println("Student with name: " + name + " not found");
+        System.out.println();
+    }
+
+    // Checking data by ID
+    public void checkById(int id) {
+        StudentNode temp = head;
+        while (temp != null) {
+            if (temp.id == id) {
+                System.out.println(temp.id + " " + temp.name + " " + temp.gpa + " " + temp.phone);
+                System.out.println();
+                return;
+            }
+            temp = temp.next;
+        }
+        System.out.println("Student with ID: " + id + " not found");
+        System.out.println();
+    }
+
+    // Checking data by phone number
+    public void checkByPhone(long phone) {
+        StudentNode temp = head;
+        while (temp != null) {
+            if (temp.phone == phone) {
+                System.out.println(temp.id + " " + temp.name + " " + temp.gpa + " " + temp.phone);
+                System.out.println();
+                return;
+            }
+            temp = temp.next;
+        }
+        System.out.println("Student with phone number: " + phone + " not found");
+        System.out.println();
+    }
+
+    // Deleting data by ID
+    public void deleteById(int id) {
+        if (head == null) {
+            System.out.println("List is empty.");
+            return;
+        }
+
+        if (head.id == id) {
+            head = head.next; // Change head
+            System.out.println("Student with ID " + id + " deleted successfully");
+            return;
+        }
+
+        StudentNode temp = head;
+        StudentNode prev = null;
+        while (temp != null && temp.id != id) {
+            prev = temp;
+            temp = temp.next;
+        }
+
+        if (temp == null) {
+            System.out.println("Student with ID " + id + " not found");
+            return;
+        }
+
+        prev.next = temp.next;
+        System.out.println("Student with ID " + id + " deleted successfully");
+    }
+
+    // Deleting data by name
+    public void deleteByName(String name) {
+        if (head == null) {
+            System.out.println("List is empty.");
+            return;
+        }
+
+        if (head.name.equals(name)) {
+            head = head.next; // Change head
+            System.out.println("Student with name " + name + " deleted successfully");
+            return;
+        }
+
+        StudentNode temp = head;
+        StudentNode prev = null;
+        while (temp != null && !temp.name.equals(name)) {
+            prev = temp;
+            temp = temp.next;
+        }
+
+        if (temp == null) {
+            System.out.println("Student with name " + name + " not found");
+            return;
+        }
+
+        prev.next = temp.next;
+        System.out.println("Student with name " + name + " deleted successfully");
+    }
+
+    // Deleting data by phone number
+    public void deleteByPhone(long phone) {
+        if (head == null) {
+            System.out.println("List is empty.");
+            return;
+        }
+
+        if (head.phone == phone) {
+            head = head.next; // Change head
+            System.out.println("Student with phone number " + phone + " deleted successfully");
+            return;
+        }
+
+        StudentNode temp = head;
+        StudentNode prev = null;
+        while (temp != null && temp.phone != phone) {
+            prev = temp;
+            temp = temp.next;
+        }
+
+        if (temp == null) {
+            System.out.println("Student with phone number " + phone + " not found");
+            return;
+        }
+
+        prev.next = temp.next;
+        System.out.println("Student with phone number " + phone + " deleted successfully");
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Main management = new Main();
+
+        // Sample insertions
+        management.insert(1, "Avinash", 9.3, 7731987063L);
+        management.insert(2, "Raju", 9.2, 9949441768L);
+        management.insert(3, "Shyam", 8.3, 7730996630L);
+
+        while (true) {
+            System.out.println("1. Search");
+            System.out.println("2. Display Records");
+            System.out.println("3. Delete");
+            System.out.println("4. Exit");
+            System.out.println();
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+
+            if (choice == 1) {
+                System.out.println("Choose search method");
+                System.out.println("1. Search by ID");
+                System.out.println("2. Search by Name");
+                System.out.println("3. Search by Phone number");
+                int searchMethod = scanner.nextInt();
+
+                switch (searchMethod) {
+                    case 1:
+                        System.out.print("Enter ID: ");
+                        int id = scanner.nextInt();
+                        management.checkById(id);
+                        break;
+                    case 2:
+                        System.out.print("Enter name: ");
+                        String name = scanner.next();
+                        management.checkByName(name);
+                        break;
+                    case 3:
+                        System.out.print("Enter phone number: ");
+                        long phone = scanner.nextLong();
+                        management.checkByPhone(phone);
+                        break;
+                    default:
+                        System.out.println("Choose a valid option");
+                }
+            } else if (choice == 2) {
+                management.display();
+            } else if (choice == 3) {
+                System.out.println("Choose delete option");
+                System.out.println("1. Delete by ID");
+                System.out.println("2. Delete by Name");
+                System.out.println("3. Delete by Phone number");
+                System.out.print("Enter your choice: ");
+                int deleteMethod = scanner.nextInt();
+
+                switch (deleteMethod) {
+                    case 1:
+                        System.out.print("Enter ID to be deleted: ");
+                        int idToDelete = scanner.nextInt();
+                        management.deleteById(idToDelete);
+                        break;
+                    case 2:
+                        System.out.print("Enter name to be deleted: ");
+                        String nameToDelete = scanner.next();
+                        management.deleteByName(nameToDelete);
+                        break;
+                    case 3:
+                        System.out.print("Enter phone number to be deleted: ");
+                        long phoneToDelete = scanner.nextLong();
+                        management.deleteByPhone(phoneToDelete);
+                        break;
+                    default:
+                        System.out.println("Choose a valid option");
+                }
+            } else if (choice == 4) {
+                break;
+            } else {
+                System.out.println("Choose a valid option");
+            }
+        }
+        scanner.close();
+    }
+}
